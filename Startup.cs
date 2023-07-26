@@ -1,3 +1,4 @@
+using CSM.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +27,20 @@ namespace CSM
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Register IUserProfileRepository and its implementation UserProfileRepository
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+
+            // Register ICodeSnippetRepository and its implementation CodeSnippetRepository
+            services.AddTransient<ICodeSnippetRepository, CodeSnippetRepository>();
+
+            // Register ITagRepository and its implementation TagRepository
+            services.AddTransient<ITagRepository, TagRepository>();
+
+            // Register ICodeSnippetTagRepository and its implementation CodeSnippetTagRepository
+            services.AddTransient<ICodeSnippetTagRepository, CodeSnippetTagRepository>();
+
+            // Register IFavoriteSnippetRepository and its implementation FavoriteSnippetRepository
+            services.AddTransient<IFavoriteSnippetRepository, FavoriteSnippetRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

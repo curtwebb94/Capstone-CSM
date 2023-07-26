@@ -1,62 +1,44 @@
-﻿using CSM.Repositories;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 using CSM.Models;
-using System.Collections.Generic;
-using System;
-using Microsoft.Extensions.Configuration;
+using CSM.Repositories;
 
-namespace UserProfileRepository.Repositories
+namespace CSM.Repositories
 {
-    /// <summary>
-    ///  This class is responsible for interacting with Room data.
-    ///  It inherits from the BaseRepository class so that it can use the BaseRepository's Connection property
-    /// </summary>
     public class UserProfileRepository : BaseRepository, IUserProfileRepository
     {
-        /// <summary>
-        ///  When new RoomRepository is instantiated, pass the connection string along to the BaseRepository
-        /// </summary>
         public UserProfileRepository(IConfiguration configuration) : base(configuration) { }
-
 
         public List<UserProfile> GetAllUserProfiles()
         {
             using (SqlConnection connection = Connection)
             {
-                // Note, we must Open() the connection, the "using" block doesn't do that for us.
                 connection.Open();
 
-                // We must "use" commands too.
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    // Here we setup the command with the SQL we want to execute before we execute it.
                     command.CommandText = "SELECT [Id], [Username], [Email], [Password], [CreateTime] FROM [User]";
 
-                    // Execute the SQL in the database and get a "reader" that will give us access to the data.
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        // A list to hold the user profiles we retrieve from the database.
                         List<UserProfile> userProfiles = new List<UserProfile>();
 
-                        // Read() will return true if there's more data to read
                         while (reader.Read())
                         {
-                            // The "ordinal" is the numeric position of the column in the query results.
-                            // For our query, "Id" has an ordinal value of 0, "Username" is 1, and so on.
                             int idColumnPosition = reader.GetOrdinal("Id");
                             int usernameColumnPosition = reader.GetOrdinal("Username");
                             int emailColumnPosition = reader.GetOrdinal("Email");
                             int passwordColumnPosition = reader.GetOrdinal("Password");
                             int createTimeColumnPosition = reader.GetOrdinal("CreateTime");
 
-                            // We use the reader's GetXXX methods to get the value for a particular ordinal.
                             int idValue = reader.GetInt32(idColumnPosition);
                             string usernameValue = reader.GetString(usernameColumnPosition);
                             string emailValue = reader.GetString(emailColumnPosition);
                             string passwordValue = reader.GetString(passwordColumnPosition);
                             DateTime createTimeValue = reader.GetDateTime(createTimeColumnPosition);
 
-                            // Now let's create a new user profile object using the data from the database.
                             UserProfile userProfile = new UserProfile
                             {
                                 Id = idValue,
@@ -66,12 +48,80 @@ namespace UserProfileRepository.Repositories
                                 CreateTime = createTimeValue
                             };
 
-                            // ...and add that user profile object to our list.
                             userProfiles.Add(userProfile);
                         }
-                        // Return the list of user profiles to whomever called this method.
                         return userProfiles;
                     }
+                }
+            }
+        }
+
+        public UserProfile GetUserProfileById(int id)
+        {
+            using (SqlConnection connection = Connection)
+            {
+                connection.Open();
+
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT [Id], [Username], [Email], [Password], [CreateTime] FROM [User] WHERE [Id] = @Id";
+                    command.Parameters.AddWithValue("@Id", id);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            int idColumnPosition = reader.GetOrdinal("Id");
+                            int usernameColumnPosition = reader.GetOrdinal("Username");
+                            int emailColumnPosition = reader.GetOrdinal("Email");
+                            int passwordColumnPosition = reader.GetOrdinal("Password");
+                            int createTimeColumnPosition = reader.GetOrdinal("CreateTime");
+
+                            int idValue = reader.GetInt32(idColumnPosition);
+                            string usernameValue = reader.GetString(usernameColumnPosition);
+                            string emailValue = reader.GetString(emailColumnPosition);
+                            string passwordValue = reader.GetString(passwordColumnPosition);
+                            DateTime createTimeValue = reader.GetDateTime(createTimeColumnPosition);
+
+                            UserProfile userProfile = new UserProfile
+                            {
+                                Id = idValue,
+                                Username = usernameValue,
+                                Email = emailValue,
+                                Password = passwordValue,
+                                CreateTime = createTimeValue
+                            };
+
+                            return userProfile;
+                        }
+                        return null; // Return null if no user profile with the given id is found.
+                    }
+                }
+            }
+        }
+        public int AddUserProfile(UserProfile userProfile)
+        {
+            using (SqlConnection connection = Connection)
+            {
+                connection.Open();
+
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = @"
+                    INSERT INTO [User] ([Username], [Email], [Password], [CreateTime])
+                    VALUES (@Username, @Email, @Password, @CreateTime);
+                    SELECT SCOPE_IDENTITY();";
+
+                    command.Parameters.AddWithValue("@Username", userProfile.Username);
+                    command.Parameters.AddWithValue("@Email", userProfile.Email);
+                    command.Parameters.AddWithValue("@Password", userProfile.Password);
+                    command.Parameters.AddWithValue("@CreateTime", userProfile.CreateTime);
+
+                    // ExecuteScalar is used to retrieve the generated identity value after insertion.
+                    object result = command.ExecuteScalar();
+
+                    // Check if the insertion was successful and return the newly generated ID, or -1 if failed.
+                    return (result != null && int.TryParse(result.ToString(), out int id)) ? id : -1;
                 }
             }
         }
