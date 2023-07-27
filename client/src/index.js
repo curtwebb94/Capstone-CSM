@@ -6,15 +6,11 @@ import reportWebVitals from './reportWebVitals';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-// Add your Firebase configuration here (replace with your actual Firebase config)
 const firebaseConfig = {
-  apiKey: AIzaSyCnmYtttyGyzTYiG4xsrT9vLAtGoAlyxEs,
-  // Add other Firebase config options (authDomain, databaseURL, etc.) here
+  apiKey: 'AIzaSyCnmYtttyGyzTYiG4xsrT9vLAtGoAlyxEs',
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -23,7 +19,4 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

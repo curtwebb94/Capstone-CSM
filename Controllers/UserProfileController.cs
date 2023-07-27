@@ -61,6 +61,30 @@ namespace CSM.Controllers
             }
         }
 
-        // You can add more CRUD operations (e.g., Update and Delete) here as needed.
+        [HttpGet("firebase/{firebaseUserId}")]
+        public ActionResult<UserProfile> GetUserByFirebaseUserId(string firebaseUserId)
+        {
+            // Use the repository to get the user by firebaseUserId
+            UserProfile user = _userProfileRepository.GetUserProfileByFirebaseUserId(firebaseUserId);
+
+            if (user == null)
+            {
+                return NotFound(); // Return 404 if user not found
+            }
+
+            return Ok(user); // Return the user data in the response
+        }
+
+        [HttpGet("DoesUserExist/{firebaseUserId}")]
+        public IActionResult DoesUserExist(string firebaseUserId)
+        {
+            var userProfile = _userProfileRepository.GetUserProfileByFirebaseUserId(firebaseUserId);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
     }
 }

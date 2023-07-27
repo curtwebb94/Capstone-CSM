@@ -8,6 +8,7 @@ namespace CSM.Repositories
         List<UserProfile> GetAllUserProfiles();
         UserProfile GetUserProfileById(int id);
         int AddUserProfile(UserProfile userProfile);
+        UserProfile GetUserProfileByFirebaseUserId(string firebaseUserId);
 
     }
 }

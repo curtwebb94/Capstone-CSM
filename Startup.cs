@@ -42,6 +42,9 @@ namespace CSM
             // Register IFavoriteSnippetRepository and its implementation FavoriteSnippetRepository
             services.AddTransient<IFavoriteSnippetRepository, FavoriteSnippetRepository>();
 
+            services.AddScoped<IUserPreferenceRepository, UserPreferenceRepository>();
+
+           
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -62,6 +65,8 @@ namespace CSM
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

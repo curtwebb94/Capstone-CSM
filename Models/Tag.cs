@@ -1,4 +1,7 @@
-﻿namespace CSM.Models
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace CSM.Models
 {
     public class Tag
     {

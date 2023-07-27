@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Spinner } from 'reactstrap';
-import ApplicationViews from "./components/ApplicationViews";
-import { onLoginStatusChange } from "./modules/authManager";
-import Header from './components/Header';
+import ApplicationViews from './components/ApplicationViews';
+import { onLoginStatusChange } from './modules/authManager';
+import Navbar from './components/NavBar';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -18,7 +18,8 @@ function App() {
 
   return (
     <Router>
-      <Header isLoggedIn={isLoggedIn} />
+      {/* Pass the isLoggedIn prop to the Navbar component */}
+      <Navbar isLoggedIn={isLoggedIn} handleLogout={() => {}} />
       <ApplicationViews isLoggedIn={isLoggedIn} />
     </Router>
   );

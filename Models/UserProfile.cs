@@ -6,6 +6,7 @@ namespace CSM.Models
     public class UserProfile
     {
         public int Id { get; set; }
+        public string FirebaseUserId { get; set; }
 
         [Required(ErrorMessage = "Username is required")]
         public string Username { get; set; }
