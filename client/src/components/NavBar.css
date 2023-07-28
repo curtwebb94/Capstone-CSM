@@ -1,0 +1,63 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    color: #fff;
+    padding: 1rem;
+  }
+  
+  .navbar-title {
+    font-size: 1.5rem;
+  }
+  
+  .navbar-title a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .navbar-menu {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav-item {
+    display: inline-block;
+  }
+  
+  .nav-link {
+    color: #ddd;
+    text-decoration: none;
+  }
+  
+  .nav-link:hover {
+    color: #fff;
+  }
+
+  .nav-link, .logout-button {
+    color: #ddd;
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+    font-family: inherit; /* Use the same font as the rest of the tabs */
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0; /* Remove padding to get rid of button edges */
+  }
+  
+  .nav-link:hover, .logout-button:hover {
+    color: #fff;
+  }
+
+  .nav-link, .login-link {
+    color: #ddd;
+    text-decoration: none;
+  }
+  
+  .nav-link:hover, .login-link:hover {
+    color: #fff;
+  }
+  
