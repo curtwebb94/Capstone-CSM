@@ -13,6 +13,30 @@ const _doesUserExist = (firebaseUserId) => {
         }).then(resp => resp.ok));
 };
 
+// Function to get the user's ID based on the current user's Firebase ID
+export const getUserIdByFirebaseId = async (firebaseId) => {
+    try {
+      // Initialize Firebase Firestore
+      const firestore = firebase.firestore();
+  
+      // Query the "users" collection for the user with the matching "firebaseUserId"
+      const querySnapshot = await firestore.collection('users').where('firebaseUserId', '==', firebaseId).get();
+  
+      // If there's a matching user, return their user ID
+      if (!querySnapshot.empty) {
+        const user = querySnapshot.docs[0].data();
+        return user.id;
+      } else {
+        // If no matching user is found, return null or an error message as desired
+        return null;
+      }
+    } catch (error) {
+      console.error('Error getting user ID:', error);
+      // Handle the error appropriately, e.g., return null or throw an error
+      return null;
+    }
+  };
+
 const _saveUser = (userProfile) => {
     return getToken().then((token) =>
         fetch(_apiUrl, {

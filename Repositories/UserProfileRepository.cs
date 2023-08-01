@@ -19,7 +19,7 @@ namespace CSM.Repositories
 
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = "SELECT [Id], [FirebaseUserId], [Username], [Email], [Password], [CreateTime] FROM [User]";
+                    command.CommandText = "SELECT [Id], [FirebaseUserId], [Username], [Password], [CreateTime] FROM [User]";
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -30,14 +30,12 @@ namespace CSM.Repositories
                             int idColumnPosition = reader.GetOrdinal("Id");
                             int firebaseUserIdColumnPosition = reader.GetOrdinal("FirebaseUserId");
                             int usernameColumnPosition = reader.GetOrdinal("Username");
-                            int emailColumnPosition = reader.GetOrdinal("Email");
                             int passwordColumnPosition = reader.GetOrdinal("Password");
                             int createTimeColumnPosition = reader.GetOrdinal("CreateTime");
 
                             int idValue = reader.GetInt32(idColumnPosition);
                             string firebaseUserIdValue = reader.GetString(firebaseUserIdColumnPosition);
                             string usernameValue = reader.GetString(usernameColumnPosition);
-                            string emailValue = reader.GetString(emailColumnPosition);
                             string passwordValue = reader.GetString(passwordColumnPosition);
                             DateTime createTimeValue = reader.GetDateTime(createTimeColumnPosition);
 
@@ -46,7 +44,6 @@ namespace CSM.Repositories
                                 Id = idValue,
                                 FirebaseUserId = firebaseUserIdValue,
                                 Username = usernameValue,
-                                Email = emailValue,
                                 Password = passwordValue,
                                 CreateTime = createTimeValue
                             };
@@ -67,7 +64,7 @@ namespace CSM.Repositories
 
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = "SELECT [Id], [FirebaseUserId], [Username], [Email], [Password], [CreateTime] FROM [User] WHERE [Id] = @Id";
+                    command.CommandText = "SELECT [Id], [FirebaseUserId], [Username], [Password], [CreateTime] FROM [User] WHERE [Id] = @Id";
                     command.Parameters.AddWithValue("@Id", id);
 
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -77,14 +74,12 @@ namespace CSM.Repositories
                             int idColumnPosition = reader.GetOrdinal("Id");
                             int firebaseUserIdColumnPosition = reader.GetOrdinal("FirebaseUserId");
                             int usernameColumnPosition = reader.GetOrdinal("Username");
-                            int emailColumnPosition = reader.GetOrdinal("Email");
                             int passwordColumnPosition = reader.GetOrdinal("Password");
                             int createTimeColumnPosition = reader.GetOrdinal("CreateTime");
 
                             int idValue = reader.GetInt32(idColumnPosition);
                             string firebaseUserIdValue = reader.GetString(firebaseUserIdColumnPosition);
                             string usernameValue = reader.GetString(usernameColumnPosition);
-                            string emailValue = reader.GetString(emailColumnPosition);
                             string passwordValue = reader.GetString(passwordColumnPosition);
                             DateTime createTimeValue = reader.GetDateTime(createTimeColumnPosition);
 
@@ -93,7 +88,6 @@ namespace CSM.Repositories
                                 Id = idValue,
                                 FirebaseUserId = firebaseUserIdValue,
                                 Username = usernameValue,
-                                Email = emailValue,
                                 Password = passwordValue,
                                 CreateTime = createTimeValue
                             };
@@ -115,15 +109,14 @@ namespace CSM.Repositories
                 using (SqlCommand command = connection.CreateCommand())
                 {
                     command.CommandText = @"
-                    INSERT INTO [User] ([FirebaseUserId], [Username], [Email], [Password], [CreateTime])
-                    VALUES (@FirebaseUserId, @Username, @Email, @Password, @CreateTime);
+                    INSERT INTO [User] ([FirebaseUserId], [Username], [Password], [CreateTime])
+                    VALUES (@FirebaseUserId, @Username, @Password, @CreateTime);
                     SELECT SCOPE_IDENTITY();";
 
                     command.Parameters.AddWithValue("@FirebaseUserId", userProfile.FirebaseUserId);
                     command.Parameters.AddWithValue("@Username", userProfile.Username);
-                    command.Parameters.AddWithValue("@Email", userProfile.Email);
                     command.Parameters.AddWithValue("@Password", userProfile.Password);
-                    command.Parameters.AddWithValue("@CreateTime", userProfile.CreateTime);
+                    command.Parameters.AddWithValue("@CreateTime", DateTime.Now);
 
                     // ExecuteScalar is used to retrieve the generated identity value after insertion.
                     object result = command.ExecuteScalar();
@@ -142,7 +135,7 @@ namespace CSM.Repositories
 
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = "SELECT [Id], [Username], [Email], [Password], [CreateTime] FROM [User] WHERE [FirebaseUserId] = @FirebaseUserId";
+                    command.CommandText = "SELECT [Id], [Username], [Password], [CreateTime] FROM [User] WHERE [FirebaseUserId] = @FirebaseUserId";
                     command.Parameters.AddWithValue("@FirebaseUserId", firebaseUserId);
 
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -151,13 +144,11 @@ namespace CSM.Repositories
                         {
                             int idColumnPosition = reader.GetOrdinal("Id");
                             int usernameColumnPosition = reader.GetOrdinal("Username");
-                            int emailColumnPosition = reader.GetOrdinal("Email");
                             int passwordColumnPosition = reader.GetOrdinal("Password");
                             int createTimeColumnPosition = reader.GetOrdinal("CreateTime");
 
                             int idValue = reader.GetInt32(idColumnPosition);
                             string usernameValue = reader.GetString(usernameColumnPosition);
-                            string emailValue = reader.GetString(emailColumnPosition);
                             string passwordValue = reader.GetString(passwordColumnPosition);
                             DateTime createTimeValue = reader.GetDateTime(createTimeColumnPosition);
 
@@ -165,7 +156,6 @@ namespace CSM.Repositories
                             {
                                 Id = idValue,
                                 Username = usernameValue,
-                                Email = emailValue,
                                 Password = passwordValue,
                                 CreateTime = createTimeValue
                             };

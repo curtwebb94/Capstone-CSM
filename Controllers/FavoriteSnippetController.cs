@@ -53,6 +53,27 @@ namespace CSM.Controllers
             }
         }
 
+        // GET: api/FavoriteSnippet/user/{userId}
+        [HttpGet("user/{userId}")]
+        public ActionResult<IEnumerable<FavoriteSnippet>> GetFavoriteSnippetsByUserId(int userId)
+        {
+            try
+            {
+                List<FavoriteSnippet> favoriteSnippets = _favoriteSnippetRepository.GetFavoriteSnippetsByUserId(userId);
+
+                if (favoriteSnippets == null || favoriteSnippets.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(favoriteSnippets);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while fetching favorite snippets for the user.");
+            }
+        }
+
         // POST: api/FavoriteSnippet
         [HttpPost]
         public IActionResult AddFavoriteSnippet(FavoriteSnippet favoriteSnippet)
@@ -64,7 +85,7 @@ namespace CSM.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while adding the favorite snippet.");
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -112,5 +133,20 @@ namespace CSM.Controllers
                 return StatusCode(500, "An error occurred while deleting the favorite snippet.");
             }
         }
+
+        //// GET: api/FavoriteSnippet/user/{firebaseId}
+        //[HttpGet("user/{firebaseId}")]
+        //public ActionResult<IEnumerable<FavoriteSnippet>> GetFavoriteSnippetsByFirebaseId(string firebaseId)
+        //{
+        //    try
+        //    {
+        //        List<FavoriteSnippet> favoriteSnippets = _favoriteSnippetRepository.GetFavoriteSnippetsByFirebaseId(firebaseId);
+        //        return Ok(favoriteSnippets);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, "An error occurred while fetching favorite snippets.");
+        //    }
+        //}
     }
 }

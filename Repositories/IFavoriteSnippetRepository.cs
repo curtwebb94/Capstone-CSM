@@ -10,5 +10,8 @@ namespace CSM.Repositories
         void AddFavoriteSnippet(FavoriteSnippet favoriteSnippet);
         void DeleteFavoriteSnippet(int id);
         void UpdateFavoriteSnippet(FavoriteSnippet favoriteSnippet);
+        List<FavoriteSnippet> GetFavoriteSnippetsByUserId(int userId);
+        List<FavoriteSnippet> GetFavoriteSnippetsByFirebaseId(string firebaseId);
+
     }
 }

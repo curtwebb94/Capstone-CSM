@@ -6,71 +6,36 @@ import { register } from "../modules/authManager";
 export default function Register() {
     const navigate = useNavigate();
 
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
-    const fullName = firstName + " " + lastName;
-    const [username, setUsername] = useState();
-    const [email, setEmail] = useState();
-    const [imageUrl, setImageUrl] = useState();
-    const [password, setPassword] = useState();
-    const [confirmPassword, setConfirmPassword] = useState();
+    const [username, setUsername] = useState(""); 
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const registerClick = (e) => {
         e.preventDefault();
+        console.log(username)
         if (password && password !== confirmPassword) {
             alert("Passwords don't match. Try again.");
         } else {
             const userProfile = {
-                fullName,
                 username,
-                imageUrl,
-                email,
+                email: username, 
+                password
             };
             register(userProfile, password).then(() => navigate("/"));
         }
     };
+    
 
     return (
         <Form onSubmit={registerClick}>
             <fieldset>
                 <FormGroup>
-                    <Label htmlFor="firstName">First Name</Label>
-                    <Input
-                        id="firstName"
-                        type="text"
-                        onChange={(e) => setFirstName(e.target.value)}
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="lastName">Last Name</Label>
-                    <Input
-                        id="lastName"
-                        type="text"
-                        onChange={(e) => setLastName(e.target.value)}
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="username">Display Name</Label>
+                    <Label htmlFor="username">Email (Will also be username)</Label>
                     <Input
                         id="username"
-                        type="text"
+                        type="email"
+                        value={username} 
                         onChange={(e) => setUsername(e.target.value)}
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="email">Email</Label>
-                    <Input
-                        id="email"
-                        type="text"
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="imageUrl">Profile Image URL</Label>
-                    <Input
-                        id="imageUrl"
-                        type="text"
-                        onChange={(e) => setImageUrl(e.target.value)}
                     />
                 </FormGroup>
                 <FormGroup>
@@ -78,6 +43,7 @@ export default function Register() {
                     <Input
                         id="password"
                         type="password"
+                        value={password} 
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </FormGroup>
@@ -86,6 +52,7 @@ export default function Register() {
                     <Input
                         id="confirmPassword"
                         type="password"
+                        value={confirmPassword} // Add the value prop to correctly set the value of the input field
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                 </FormGroup>
