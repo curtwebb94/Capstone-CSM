@@ -95,6 +95,98 @@ namespace CSM.Repositories
             }
         }
 
+        public List<FavoriteSnippet> GetFavoriteSnippetsByUserId(int userId)
+        {
+            using (SqlConnection connection = Connection)
+            {
+                connection.Open();
+
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT [Id], [UserId], [SnippetId], [CreateTime] FROM [FavoriteSnippet] WHERE [UserId] = @UserId";
+                    command.Parameters.AddWithValue("@UserId", userId);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<FavoriteSnippet> favoriteSnippets = new List<FavoriteSnippet>();
+
+                        while (reader.Read())
+                        {
+                            int idColumnPosition = reader.GetOrdinal("Id");
+                            int userIdColumnPosition = reader.GetOrdinal("UserId");
+                            int snippetIdColumnPosition = reader.GetOrdinal("SnippetId");
+                            int createTimeColumnPosition = reader.GetOrdinal("CreateTime");
+
+                            int idValue = reader.GetInt32(idColumnPosition);
+                            int userIdValue = reader.GetInt32(userIdColumnPosition);
+                            int snippetIdValue = reader.GetInt32(snippetIdColumnPosition);
+                            DateTime createTimeValue = reader.GetDateTime(createTimeColumnPosition);
+
+                            FavoriteSnippet favoriteSnippet = new FavoriteSnippet
+                            {
+                                Id = idValue,
+                                UserId = userIdValue,
+                                SnippetId = snippetIdValue,
+                                CreateTime = createTimeValue
+                            };
+
+                            favoriteSnippets.Add(favoriteSnippet);
+                        }
+
+                        return favoriteSnippets;
+                    }
+                }
+            }
+        }
+
+        public List<FavoriteSnippet> GetFavoriteSnippetsByFirebaseId(string firebaseId)
+        {
+            using (SqlConnection connection = Connection)
+            {
+                connection.Open();
+
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = @"SELECT fs.[Id], fs.[UserId], fs.[SnippetId], fs.[CreateTime]
+                                   FROM [FavoriteSnippet] fs
+                                   JOIN [User] u ON fs.[UserId] = u.[Id]
+                                   WHERE u.[FirebaseId] = @FirebaseId";
+                    command.Parameters.AddWithValue("@FirebaseId", firebaseId);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<FavoriteSnippet> favoriteSnippets = new List<FavoriteSnippet>();
+
+                        while (reader.Read())
+                        {
+                            int idColumnPosition = reader.GetOrdinal("Id");
+                            int userIdColumnPosition = reader.GetOrdinal("UserId");
+                            int snippetIdColumnPosition = reader.GetOrdinal("SnippetId");
+                            int createTimeColumnPosition = reader.GetOrdinal("CreateTime");
+
+                            int idValue = reader.GetInt32(idColumnPosition);
+                            int userIdValue = reader.GetInt32(userIdColumnPosition);
+                            int snippetIdValue = reader.GetInt32(snippetIdColumnPosition);
+                            DateTime createTimeValue = reader.GetDateTime(createTimeColumnPosition);
+
+                            FavoriteSnippet favoriteSnippet = new FavoriteSnippet
+                            {
+                                Id = idValue,
+                                UserId = userIdValue,
+                                SnippetId = snippetIdValue,
+                                CreateTime = createTimeValue
+                            };
+
+                            favoriteSnippets.Add(favoriteSnippet);
+                        }
+
+                        return favoriteSnippets;
+                    }
+                }
+            }
+        }
+
+
         public void AddFavoriteSnippet(FavoriteSnippet favoriteSnippet)
         {
             using (SqlConnection connection = Connection)

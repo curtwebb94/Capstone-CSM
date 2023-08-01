@@ -22,7 +22,7 @@ export default function Navbar({isLoggedIn}) {
           <Link to="/about" className="nav-link">About</Link>
         </li>
         <li className="nav-item">
-          <Link to="/profile" className="nav-link">Profile</Link>
+          <Link to="/search-code" className="nav-link">Search Snippets</Link>
         </li>
         <li className="nav-item">
           <Link to="/snippet-manager" className="nav-link">Snippet Manager</Link>

@@ -1,0 +1,78 @@
+﻿CREATE TABLE [User] (
+  [Id] INT PRIMARY KEY NOT NULL IDENTITY(1, 1),
+  [Username] VARCHAR(255) NOT NULL,
+  [FirebaseUserId] VARCHAR(255) NOT NULL,
+  [Password] VARCHAR(255) NOT NULL,
+  [FullName] VARCHAR(255) NOT NULL,
+  [CreateTime] DATETIME NOT NULL
+)
+GO
+
+CREATE TABLE [CodeSnippet] (
+  [Id] INT PRIMARY KEY NOT NULL IDENTITY(1, 1),
+  [UserId] INT NOT NULL,
+  [Title] VARCHAR(255) NOT NULL,
+  [Content] VARCHAR(MAX) NOT NULL,
+  [Description] VARCHAR(MAX) NOT NULL,
+  [CreateTime] DATETIME NOT NULL,
+  [CreatedBy] VARCHAR(255) NOT NULL
+)
+GO
+
+CREATE TABLE [FavoriteSnippet] (
+  [Id] INT PRIMARY KEY NOT NULL IDENTITY(1, 1),
+  [UserId] INT NOT NULL,
+  [SnippetId] INT NOT NULL,
+  [CreateTime] DATETIME NOT NULL
+)
+GO
+
+CREATE TABLE [Tag] (
+  [Id] INT PRIMARY KEY NOT NULL IDENTITY(1, 1),
+  [Name] VARCHAR(255) NOT NULL,
+  [Category] VARCHAR(255) NOT NULL
+)
+GO
+
+CREATE TABLE [CodeSnippetTag] (
+  [Id] INT PRIMARY KEY NOT NULL IDENTITY(1, 1),
+  [SnippetId] INT NOT NULL,
+  [TagId] INT NOT NULL
+)
+GO
+
+CREATE TABLE [UserPreference] (
+  [Id] INT PRIMARY KEY NOT NULL IDENTITY(1, 1),
+  [UserId] INT NOT NULL,
+  [BackgroundColor] VARCHAR(255) NOT NULL,
+  [FontColor] VARCHAR(255) NOT NULL,
+  [FontSize] INT NOT NULL
+)
+GO
+
+CREATE TABLE [BackgroundSlideshow] (
+  [Id] INT PRIMARY KEY NOT NULL IDENTITY(1, 1),
+  [ImageUrl] VARCHAR(255) NOT NULL,
+  [Title] VARCHAR(255) NOT NULL
+)
+GO
+
+ALTER TABLE [CodeSnippet] ADD FOREIGN KEY ([UserId]) REFERENCES [User] ([Id])
+GO
+
+ALTER TABLE [FavoriteSnippet] ADD FOREIGN KEY ([UserId]) REFERENCES [User] ([Id])
+GO
+
+ALTER TABLE [FavoriteSnippet] ADD FOREIGN KEY ([SnippetId]) REFERENCES [CodeSnippet] ([Id])
+GO
+
+ALTER TABLE [CodeSnippetTag] ADD FOREIGN KEY ([SnippetId]) REFERENCES [CodeSnippet] ([Id])
+GO
+
+ALTER TABLE [CodeSnippetTag] ADD FOREIGN KEY ([TagId]) REFERENCES [Tag] ([Id])
+GO
+
+ALTER TABLE [UserPreference] ADD FOREIGN KEY ([UserId]) REFERENCES [User] ([Id])
+GO
+
+ALTER TABLE [User] ALTER COLUMN FullName VARCHAR(255) Null

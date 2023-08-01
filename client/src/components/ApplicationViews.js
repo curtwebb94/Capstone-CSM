@@ -3,8 +3,9 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import Login from './Login'
 import Register from './Register'
 import About from './About'
-import ProfilePage from './ProfilePage'
 import Homepage from './Homepage'
+import SnippetList from './snippets/snippetList'
+import SnippetLocker from './snippets/snipppetLocker'
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -17,7 +18,8 @@ export default function ApplicationViews({ isLoggedIn }) {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/search-code" element={<SnippetList />} />
+                <Route path="/snippet-manager" element={<SnippetLocker />} />
                 <Route path="*" element={<p>Whoops, nothing here...</p>} />
             </Routes>
         </main>

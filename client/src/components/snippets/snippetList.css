@@ -1,0 +1,65 @@
+/* snippetList.css */
+.search-bar {
+    background-color: transparent;
+    border: 1px solid #fff;
+    margin-top: 4rem;
+    border-radius: 20px;
+    padding: 5px;
+  }
+  
+  .search-input {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    width: 100%;
+    outline: none;
+    padding: 5px;
+    font-size: 16px;
+  }
+  
+  /* snippet.css */
+.transparent-button {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .button-container {
+    display: flex;
+  }
+  
+  .close-button {
+    margin-left: 10px;
+  }
+  
+  .content-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .content-popup {
+    background-color: #000000;
+    padding: 20px;
+    max-width: 5%;
+    max-height: 80%;
+    overflow: auto;
+  }
+  
+  .content-text {
+    color: #000;
+    white-space: pre-wrap;
+  }
+  
+  /* Add any additional styling as needed */
+  
+  

@@ -1,0 +1,61 @@
+/* styles.css */
+
+.card {
+    background-color: transparent;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 5px;
+    margin: 10px;
+  }
+  
+  .card p {
+    margin: 5px;
+    color: white; /* Set the text color to white */
+  }
+  
+  .card p.text-left {
+    text-align: left;
+  }
+  
+  /* Add any additional custom styling you want here */
+  
+  /* Media Query for Responsiveness */
+  @media (max-width: 768px) {
+    .card {
+      padding: 10px; /* Adjust padding for smaller screens */
+    }
+  
+    .card p {
+      font-size: 14px; /* Decrease font size for smaller screens */
+    }
+  }
+  
+/* snippet.css */
+
+.snippet-card {
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 20px auto;
+  width: 80%;
+  color: white;
+  position: relative; /* Add this line for absolute positioning */
+}
+
+.save-button {
+  background-color: #fa7070;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  position: absolute; /* Add this line for absolute positioning */
+  top: 10px; /* Adjust the top position as needed */
+  right: 10px; /* Adjust the right position as needed */
+}
+
+.save-button:hover {
+  background-color: #f03030;
+}

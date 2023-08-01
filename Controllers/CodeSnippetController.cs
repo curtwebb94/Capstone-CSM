@@ -43,11 +43,25 @@ namespace CSM.Controllers
                     return Ok(codeSnippet);
                 }
 
-                return NotFound(); // Return 404 if code snippet with the given id is not found.
+                return NotFound();
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error occurred while fetching code snippet.");
+            }
+        }
+
+        [HttpGet("user/{userId}")]
+        public ActionResult<IEnumerable<CodeSnippet>> GetCodeSnippetsByUserId(int userId)
+        {
+            try
+            {
+                List<CodeSnippet> codeSnippets = _codeSnippetRepository.GetCodeSnippetsByUserId(userId);
+                return Ok(codeSnippets);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while fetching code snippets by user ID.");
             }
         }
 

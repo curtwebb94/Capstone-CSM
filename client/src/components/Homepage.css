@@ -1,9 +1,12 @@
+/* styles.css */
+
 body {
   margin: 0;
   padding: 0;
-  height: 100vh;
-  background-image: linear-gradient(to bottom, rgb(38, 38, 38),rgb(41, 41, 45), rgb(29, 27, 42), rgb(39, 38, 63), rgb(24, 27, 82));
+  min-height: 100vh; /* Set a minimum height of the viewport */
+  background-image: linear-gradient(to bottom, rgb(38, 38, 38), rgb(41, 41, 45), rgb(29, 27, 42), rgb(39, 38, 63), rgb(24, 27, 82));
   background-repeat: no-repeat;
+  background-size: cover; /* Make sure the background covers the entire viewport */
 }
 
 .Homepage {
@@ -42,7 +45,7 @@ body {
 }
 
 .search-button:hover {
-  background-color: #541f1f;
+  background-color: #f03030;
 }
 
 .search-bar {

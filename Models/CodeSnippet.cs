@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace CSM.Models
@@ -16,9 +18,14 @@ namespace CSM.Models
         [Required(ErrorMessage = "Content is required")]
         public string Content { get; set; }
 
+        [Required(ErrorMessage = "Description is required")]
+        public string Description { get; set; }
+
         public DateTime CreateTime { get; set; }
 
         [Required(ErrorMessage = "CreatedBy is required")]
         public string CreatedBy { get; set; }
+        public List<string> Tags { get; set; } // New property for tags
+
     }
 }

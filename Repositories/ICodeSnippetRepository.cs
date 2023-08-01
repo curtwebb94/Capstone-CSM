@@ -10,5 +10,7 @@ namespace CSM.Repositories
         void AddCodeSnippet(CodeSnippet codeSnippet);
         void DeleteCodeSnippet(int id);
         void EditCodeSnippet(CodeSnippet codeSnippet);
+        List<CodeSnippet> GetCodeSnippetsByUserId(int userId);
+
     }
 }
