@@ -89,7 +89,7 @@ export const SaveFavSnippet = (favoriteSnippetData, action) => {
 
 export const DeleteFavSnippet = (id) => {
   return getToken().then((token) => {
-      return fetch(apiUrl + `/${id}`, {
+      return fetch(`${apiUrl}/${id}`, {
           method: "DELETE",
           headers: {
               Authorization: `Bearer ${token}`,
