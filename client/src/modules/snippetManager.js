@@ -14,7 +14,7 @@ export const getSnippets = () => {
         return resp.json();
       } else {
         throw new Error(
-          "An unknown error occurred while trying to get products.",
+          "An unknown error occurred while trying to get snippets.",
         );
       }
     });
@@ -33,7 +33,7 @@ export const getTags = () => {
         return resp.json();
       } else {
         throw new Error(
-          "An unknown error occurred while trying to get products.",
+          "An unknown error occurred while trying to get tags.",
         );
       }
     });
@@ -52,7 +52,7 @@ export const getSnippetDetails = (id) => {
         return resp.json();
       } else {
         throw new Error(
-          "An unknown error occurred while trying to get product details.",
+          "An unknown error occurred while trying to get snippet details.",
         );
       }
     });

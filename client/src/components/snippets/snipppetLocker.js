@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getUserByFirebaseId } from "../../modules/userManager";
-import { getFavSnippetsByFirebaseId, getFavSnippetsByUserId } from "../../modules/favSnippetManager";
-import { getSnippetDetails } from "../../modules/snippetManager"; // Import the function from snippetManager.js
+import { getFavSnippetsByUserId, DeleteFavSnippet } from "../../modules/favSnippetManager";
+import { getSnippetDetails } from "../../modules/snippetManager";
 import firebase from "firebase/app";
 import Snippet from "./snippet";
-import "./snippetLocker.css"; // Import the CSS file for styling
+import "./snippetLocker.css";
 
 const SnippetLocker = () => {
   const [favoriteSnippets, setFavoriteSnippets] = useState([]);
@@ -44,8 +44,14 @@ const SnippetLocker = () => {
           );
           console.log("Snippet Details:", snippetDetails);
 
+          // Set the 'isFavorited' property for each snippet based on the favoriteSnippets list
+          const snippetsWithFavoritedStatus = snippetDetails.map((snippet) => ({
+            ...snippet,
+            isFavorited: favoriteSnippets.some((favSnippet) => favSnippet.snippetId === snippet.id),
+          }));
+
           // Update the state with the fetched favorite snippets and their details
-          setFavoriteSnippets(snippetDetails);
+          setFavoriteSnippets(snippetsWithFavoritedStatus);
         }
       } catch (error) {
         console.error("Error fetching favorite snippets:", error);
@@ -54,6 +60,34 @@ const SnippetLocker = () => {
 
     fetchFavoriteSnippets();
   }, []);
+
+  const handleSnippetDelete = (snippetId) => {
+    // Find the favorite snippet with the matching snippetId
+    const user = firebase.auth().currentUser;
+    getUserByFirebaseId(user.uid).then((userDetails) => {
+      getFavSnippetsByUserId(userDetails.id).then((favoriteSnippets) => {
+        const favoriteSnippetToDelete = favoriteSnippets.find( (fs) => fs.snippetId = snippetId)
+
+
+
+        if (favoriteSnippetToDelete) {
+          // Call the DeleteFavSnippet function to delete the snippet from favorites by its id
+          DeleteFavSnippet(favoriteSnippetToDelete.id)
+            .then(() => {
+              // Remove the deleted snippet from the favoriteSnippets list
+              setFavoriteSnippets((prevSnippets) =>
+                prevSnippets.filter((snippet) => snippet.id !== snippetId)
+              );
+            })
+            .catch((error) => {
+              console.error("Error deleting snippet from favorites:", error);
+              // Handle any errors that occurred during the delete operation
+            });
+        }
+      });
+
+    })
+  };
 
   return (
     <div className="snippet-locker-container">
@@ -66,7 +100,12 @@ const SnippetLocker = () => {
         <h1>Favorite Snippets</h1>
         {favoriteSnippets.length > 0 ? (
           favoriteSnippets.map((snippet) => (
-            <Snippet key={snippet.id} snippet={snippet} />
+            <Snippet
+              key={snippet.id}
+              snippet={snippet}
+              setFavoriteSnippets={setFavoriteSnippets}
+              handleSnippetDelete={handleSnippetDelete}
+            />
           ))
         ) : (
           <p>No favorite snippets found.</p>

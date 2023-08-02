@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Card } from "reactstrap";
 import { SaveFavSnippet } from "../../modules/favSnippetManager";
 import { getUserByFirebaseId } from "../../modules/userManager";
-import firebase from 'firebase/app';
+import firebase from "firebase/app";
 import "./snippet.css";
 
-export default function Snippet({ snippet }) {
-  const [isStarred, setIsStarred] = useState(false);
+export default function Snippet({ snippet, setFavoriteSnippets, handleSnippetDelete }) {
   const [isContentOpen, setIsContentOpen] = useState(false); // State to track whether content overlay is open
   const [currentUserUid, setCurrentUserUid] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
@@ -44,15 +43,12 @@ export default function Snippet({ snippet }) {
         createTime: new Date().toISOString(),
       };
 
-      SaveFavSnippet(favoriteSnippetData)
+      SaveFavSnippet(favoriteSnippetData, "save")
         .then((response) => {
-          console.log('Snippet saved as favorite:', response);
-
-          // Update the isStarred state to indicate that the snippet is now a favorite
-          setIsStarred(true);
+          console.log("Snippet saved as favorite:", response);
         })
         .catch((error) => {
-          console.error('Error saving snippet as favorite:', error);
+          console.error("Error saving snippet as favorite:", error);
           // Handle any errors that occurred during the save operation
         });
     }
@@ -81,7 +77,11 @@ export default function Snippet({ snippet }) {
           </div>
         )}
       </div>
-      {!isStarred && ( // Show the "Save" button only if the snippet is not yet a favorite
+      {snippet.isFavorited ? (
+        <button className="delete-button" onClick={() => handleSnippetDelete(snippet.id)}>
+          Delete
+        </button>
+      ) : (
         <button className="save-button" onClick={handleSaveClick}>
           Save
         </button>
