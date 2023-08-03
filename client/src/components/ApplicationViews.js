@@ -6,6 +6,7 @@ import About from './About'
 import Homepage from './Homepage'
 import SnippetList from './snippets/snippetList'
 import SnippetLocker from './snippets/snipppetLocker'
+import SnippetForm from './snippets/snippetForm'
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -20,6 +21,7 @@ export default function ApplicationViews({ isLoggedIn }) {
                 <Route path="/about" element={<About />} />
                 <Route path="/search-code" element={<SnippetList />} />
                 <Route path="/snippet-manager" element={<SnippetLocker />} />
+                <Route path="/snippet-form" element={<SnippetForm />} />
                 <Route path="*" element={<p>Whoops, nothing here...</p>} />
             </Routes>
         </main>
