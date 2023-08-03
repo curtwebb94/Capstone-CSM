@@ -1,14 +1,14 @@
 import React from 'react';
-import firebase from 'firebase/app';
-import 'firebase/auth';
 import './NavBar.css'; // Import the CSS file
 import { Link } from 'react-router-dom';
+import firebase from 'firebase';
+
 
 export const logout = () => {
   firebase.auth().signOut();
 };
 
-export default function Navbar({isLoggedIn}) {
+export default function Navbar({ isLoggedIn }) {
   return (
     <nav className="navbar">
       <div className="navbar-title">
@@ -24,12 +24,11 @@ export default function Navbar({isLoggedIn}) {
         <li className="nav-item">
           <Link to="/search-code" className="nav-link">Search Snippets</Link>
         </li>
-        <li className="nav-item">
-          <Link to="/snippet-manager" className="nav-link">Snippet Manager</Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/contact" className="nav-link">Contact</Link>
-        </li>
+        {isLoggedIn && ( // Show the "Snippet Manager" link only if logged in
+          <li className="nav-item">
+            <Link to="/snippet-manager" className="nav-link">Snippet Manager</Link>
+          </li>
+        )}
         {isLoggedIn ? (
           <li className="nav-item">
             <button className="logout-button" onClick={logout}>
@@ -42,9 +41,10 @@ export default function Navbar({isLoggedIn}) {
               Login
             </a>
           </li>
-        )
-        }
+        )}
       </ul>
     </nav>
   );
 }
+
+

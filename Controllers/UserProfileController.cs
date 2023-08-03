@@ -86,5 +86,31 @@ namespace CSM.Controllers
             return Ok();
         }
 
+        [HttpPut("{id}")]
+        public IActionResult UpdateUserProfile(int id, UserProfile userProfile)
+        {
+            if (id != userProfile.Id)
+            {
+                return BadRequest("Invalid ID provided.");
+            }
+
+            var existingUserProfile = _userProfileRepository.GetUserProfileById(id);
+            if (existingUserProfile == null)
+            {
+                return NotFound("User profile not found.");
+            }
+
+            existingUserProfile.Username = userProfile.Username;
+            existingUserProfile.Password = userProfile.Password;
+
+            bool updated = _userProfileRepository.UpdateUserProfile(existingUserProfile);
+            if (updated)
+            {
+                return Ok(existingUserProfile);
+            }
+
+            return StatusCode(500, "Failed to update user profile.");
+        }
+
     }
 }

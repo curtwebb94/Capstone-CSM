@@ -1,4 +1,3 @@
-// components/About.js
 import React from 'react';
 import styled from 'styled-components';
 
@@ -6,6 +5,7 @@ const AboutContainer = styled.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 40px;
+  color: white; /* Set text color to white */
 `;
 
 const Heading = styled.h1`
@@ -25,7 +25,7 @@ const Paragraph = styled.p`
 `;
 
 const Highlight = styled.span`
-  background-color: #f2f2f2;
+  background-color:   rgb(38, 38, 38);
   padding: 2px 4px;
   border-radius: 4px;
 `;
@@ -60,9 +60,7 @@ export const About = ({ isLoggedIn, handleLogout }) => {
         Have any questions or feedback? Feel free to reach out to us at contact@CodeSnippetManager.com, and we'll get back to you as soon as possible.
       </Paragraph>
     </AboutContainer>
-    <footer class="py-5 bg-dark">
-            <div class="container px-4 px-lg-5"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
-        </footer>
+    
     </div>
   );
 };

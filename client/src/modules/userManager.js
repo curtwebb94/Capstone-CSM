@@ -27,20 +27,25 @@ export const getUserByFirebaseId = (uid) => {
   })
 }
 
+// Define the updateUser function
 export const updateUser = (userObj) => {
-  return getToken().then(token => {
+  return getToken().then((token) => {
     return fetch(`${baseUrl}/${userObj.id}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         id: userObj.id,
         username: userObj.username,
         password: userObj.password,
-      })
+      }),
     })
-      .then(res => res.json())
-  })
-}
+      .then((res) => res.json())
+      .catch((error) => {
+        console.error("Error updating user:", error);
+        throw error;
+      });
+  });
+};

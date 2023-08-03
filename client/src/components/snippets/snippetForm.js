@@ -3,6 +3,8 @@ import { getToken } from "../../modules/authManager";
 import { addSnippet } from "../../modules/snippetManager";
 import firebase from "firebase/app";
 import { getUserByFirebaseId } from "../../modules/userManager";
+import "./snippetForm.css";
+
 
 const SnippetForm = () => {
   const [snippetData, setSnippetData] = useState({
@@ -29,35 +31,35 @@ const SnippetForm = () => {
     if (currentUser) {
       getUserByFirebaseId(currentUser.uid).then((UserId) => {
 
-      
-      const newSnippetData = {
-        title: snippetData.title,
-        content: snippetData.content,
-        description: snippetData.description,
-        createTime: snippetData.createTime,
-        createdBy: currentUser.email,
-        UserId: UserId.id
-      }
 
-      getToken().then((token) => {
-        addSnippet(newSnippetData, token)
-          .then((response) => {
-            console.log("Code snippet created successfully:", response);
-            // Clear the form after successful submission
-            setSnippetData({
-              title: "",
-              content: "",
-              description: "",
-              createTime: "",
-              createdBy: "",
+        const newSnippetData = {
+          title: snippetData.title,
+          content: snippetData.content,
+          description: snippetData.description,
+          createTime: snippetData.createTime,
+          createdBy: currentUser.email,
+          UserId: UserId.id
+        }
+
+        getToken().then((token) => {
+          addSnippet(newSnippetData, token)
+            .then((response) => {
+              console.log("Code snippet created successfully:", response);
+              // Clear the form after successful submission
+              setSnippetData({
+                title: "",
+                content: "",
+                description: "",
+                createTime: "",
+                createdBy: "",
+              });
+            })
+            .catch((error) => {
+              console.error("Error creating code snippet:", error);
+              // Handle any errors that occurred during the create operation
             });
-          })
-          .catch((error) => {
-            console.error("Error creating code snippet:", error);
-            // Handle any errors that occurred during the create operation
-          });
-      });
-    })
+        });
+      })
     } else {
       console.error("No user is currently logged in.");
     }
@@ -106,11 +108,14 @@ const SnippetForm = () => {
           type="text"
           id="createdBy"
           name="createdBy"
+          placeholder="Enter your username..."
           value={snippetData.createdBy}
           onChange={handleChange}
         />
 
-        <button type="submit">Create Snippet</button>
+        <button type="submit" className="popup-button">
+          Create Snippet
+        </button>
       </form>
     </div>
   );

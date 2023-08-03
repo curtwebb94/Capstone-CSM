@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getUserByFirebaseId } from "../../modules/userManager";
+import { getUserByFirebaseId, updateUser } from "../../modules/userManager";
+import { getToken } from "../../modules/authManager";
 import { getFavSnippetsByUserId, DeleteFavSnippet } from "../../modules/favSnippetManager";
 import { getSnippetDetails } from "../../modules/snippetManager";
 import firebase from "firebase/app";
@@ -11,6 +12,9 @@ const SnippetLocker = () => {
   const [favoriteSnippets, setFavoriteSnippets] = useState([]);
   const [currentUserUid, setCurrentUserUid] = useState(null);
   const [email, setEmail] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [newUsername, setNewUsername] = useState("");
+  const [userDetails, setUserDetails] = useState(null); // Define userDetails state
 
   useEffect(() => {
     const currentUser = firebase.auth().currentUser;
@@ -22,11 +26,9 @@ const SnippetLocker = () => {
     }
 
     // Fetch the current user's Firebase UID and get the favorite snippets based on the UID
-    const fetchFavoriteSnippets = async () => {
+    const fetchUserData = async () => {
       try {
-        // Get the current user's Firebase UID
         const user = firebase.auth().currentUser;
-        setEmail(user.email);
         if (user) {
           setCurrentUserUid(user.uid);
 
@@ -34,6 +36,11 @@ const SnippetLocker = () => {
           const userDetails = await getUserByFirebaseId(user.uid);
           console.log("User Details:", userDetails);
           console.log("User Id:", userDetails.id);
+          setEmail(userDetails.username);
+
+
+          // Set user details state
+          setUserDetails(userDetails);
 
           // Get the user's favorite snippets using the UID
           const favoriteSnippets = await getFavSnippetsByUserId(userDetails.id);
@@ -59,49 +66,73 @@ const SnippetLocker = () => {
       }
     };
 
-    fetchFavoriteSnippets();
+    fetchUserData();
   }, []);
 
+  // Function to handle updating the username
+  const handleUsernameUpdate = () => {
+    const user = firebase.auth().currentUser;
+    if (user) {
+      // use the 'updateUser' function to update the username of the user with the provided data
+      updateUser({ id: userDetails.id, username: newUsername })
+        .then((updatedUser) => {
+          setEmail(updatedUser.username);
+          // Exit the edit mode by setting 'editMode' state to 'false'
+          setEditMode(false);
+        })
+        .catch((error) => {
+          console.error("Error updating username:", error);
+        });
+    }
+  };
+
   const handleSnippetDelete = (snippetId) => {
-    // Find the favorite snippet with the matching snippetId
     const user = firebase.auth().currentUser;
     getUserByFirebaseId(user.uid).then((userDetails) => {
       getFavSnippetsByUserId(userDetails.id).then((favoriteSnippets) => {
-        const favoriteSnippetToDelete = favoriteSnippets.find( (fs) => fs.snippetId = snippetId)
-
-
+        const favoriteSnippetToDelete = favoriteSnippets.find((fs) => fs.snippetId === snippetId);
 
         if (favoriteSnippetToDelete) {
-          // Call the DeleteFavSnippet function to delete the snippet from favorites by its id
           DeleteFavSnippet(favoriteSnippetToDelete.id)
             .then(() => {
-              // Remove the deleted snippet from the favoriteSnippets list
               setFavoriteSnippets((prevSnippets) =>
                 prevSnippets.filter((snippet) => snippet.id !== snippetId)
               );
             })
             .catch((error) => {
               console.error("Error deleting snippet from favorites:", error);
-              // Handle any errors that occurred during the delete operation
             });
         }
       });
-
-    })
+    });
   };
 
   return (
     <div className="snippet-locker-container">
       <div className="profile-section">
         <h1>User Profile</h1>
-        <p>Username: {email}</p>
-        <button>Edit Username</button>
+        {editMode ? (
+          <div>
+            <input
+              type="text"
+              value={newUsername}
+              onChange={(e) => setNewUsername(e.target.value)}
+            />
+            <button onClick={handleUsernameUpdate}>Save</button>
+            <button onClick={() => setEditMode(false)}>Cancel</button>
+          </div>
+        ) : (
+          <div>
+            <p>Username: {email}</p>
+            <button onClick={() => setEditMode(true)}>Edit Username</button>
+          </div>
+        )}
       </div>
 
       <div className="favorite-snippets-section">
         <h1>Favorite Snippets</h1>
         <Link to="/snippet-form">
-        <button>Create Snippet</button>
+          <button className="create-snippet-button">Create Snippet</button>
         </Link>
         {favoriteSnippets.length > 0 ? (
           favoriteSnippets.map((snippet) => (

@@ -51,8 +51,15 @@ const _saveUser = (userProfile) => {
 
 
 
-export const getToken = () => firebase.auth().currentUser.getIdToken();
-
+export const getToken = () => {
+    const user = firebase.auth().currentUser;
+    if (user) {
+      return user.getIdToken();
+    } else {
+      // Return a default or empty value when the user is not logged in
+      return Promise.resolve(null); // You can change this to return any default value you prefer
+    }
+  };
 
 export const login = (email, pw) => {
     return firebase.auth().signInWithEmailAndPassword(email, pw)

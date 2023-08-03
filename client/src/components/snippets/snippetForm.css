@@ -1,0 +1,93 @@
+/* snippetForm.css */
+
+.code-snippet-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: transparent;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .code-snippet-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white; /* Text color is white */
+    font-weight: 400; /* Lighter font weight */
+  }
+  
+  .code-snippet-form label {
+    display: block;
+    font-weight: 300;
+    margin-bottom: 10px;
+    color: white; /* Text color is white */
+  }
+  
+  .code-snippet-form input,
+  .code-snippet-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    background-color:rgb(38, 38, 38);
+    color: white; /* Text color is white */
+  }
+  
+  .code-snippet-form input:focus,
+  .code-snippet-form textarea:focus {
+    border-color: #007bff;
+  }
+  
+  .code-snippet-form textarea {
+    min-height: 120px;
+  }
+  
+  .code-snippet-form button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .code-snippet-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .code-snippet-form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .code-snippet-form button + button {
+    margin-left: 10px;
+    background-color: #e74c3c;
+  }
+  
+  .code-snippet-form button + button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Optional: Add some responsiveness for smaller screens */
+  @media (max-width: 480px) {
+    .code-snippet-form {
+      padding: 10px;
+    }
+    .code-snippet-form button,
+    .code-snippet-form button + button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+
+  
+  
