@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getUserByFirebaseId } from "../../modules/userManager";
 import { getFavSnippetsByUserId, DeleteFavSnippet } from "../../modules/favSnippetManager";
 import { getSnippetDetails } from "../../modules/snippetManager";
@@ -94,10 +95,14 @@ const SnippetLocker = () => {
       <div className="profile-section">
         <h1>User Profile</h1>
         <p>Username: {email}</p>
+        <button>Edit Username</button>
       </div>
 
       <div className="favorite-snippets-section">
         <h1>Favorite Snippets</h1>
+        <Link to="/snippet-form">
+        <button>Create Snippet</button>
+        </Link>
         {favoriteSnippets.length > 0 ? (
           favoriteSnippets.map((snippet) => (
             <Snippet
