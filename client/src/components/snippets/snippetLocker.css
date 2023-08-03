@@ -50,4 +50,75 @@
       flex: 2;
     }
   }
+
+ /* For the "Edit Username" button */
+.profile-section button {
+  background-color: #fa7070;
+  color: #fff;
+  border: none;
+  padding: 6px 12px; /* Adjust the padding to make the button smaller */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px; /* Adjust the font size to make the text smaller */
+  transition: background-color 0.3s ease;
+}
+
+.profile-section button:hover {
+  background-color: #f03030;
+}
+
+/* For the "Save" and "Cancel" buttons in edit mode */
+.profile-section div button {
+  background-color: #fa7070;
+  color: #fff;
+  border: none;
+  padding: 6px 12px; /* Adjust the padding to make the button smaller */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px; /* Adjust the font size to make the text smaller */
+  transition: background-color 0.3s ease;
+}
+
+.profile-section div button:hover {
+  background-color: #f03030;
+}
+
+/* For the "Create Snippet" button */
+.favorite-snippets-section button.create-snippet-button {
+  background-color: #fa7070;
+  color: #fff;
+  border: none;
+  padding: 6px 12px; /* Adjust the padding to make the button smaller */
+  border-radius: 5px;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  font-size: 14px; /* Adjust the font size to make the text smaller */
+  transition: background-color 0.3s ease;
+}
+
+.favorite-snippets-section button.create-snippet-button:hover {
+  background-color: #f03030;
+}
+
+/* For the "Delete" and "Save" buttons in the Snippet component */
+.snippet-card .delete-button,
+.snippet-card .save-button {
+  background-color: #fa7070;
+  color: #fff;
+  border: none;
+  padding: 6px 12px; /* Adjust the padding to make the button smaller */
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-size: 14px; /* Adjust the font size to make the text smaller */
+  transition: background-color 0.3s ease;
+}
+
+.snippet-card .delete-button:hover,
+.snippet-card .save-button:hover {
+  background-color: #f03030;
+}
+
+
+  
   

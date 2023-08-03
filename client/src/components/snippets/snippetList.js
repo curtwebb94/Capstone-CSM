@@ -13,6 +13,7 @@ export default function SnippetList() {
     "Find snippets...",
     "Type your query here...",
     "Explore snippets...",
+    "Search by programming language...",
   ];
 
   // Current index to rotate through the placeholderOptions array
@@ -38,6 +39,7 @@ export default function SnippetList() {
   const filteredSnippets = snippets.filter(
     (snippet) =>
       snippet.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      snippet.description.toLowerCase().includes(searchTerm.toLowerCase()) || // Include description in the search
       snippet.content.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

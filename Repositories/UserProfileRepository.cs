@@ -100,6 +100,29 @@ namespace CSM.Repositories
             }
         }
 
+        public bool UpdateUserProfile(UserProfile userProfile)
+        {
+            using (SqlConnection connection = Connection)
+            {
+                connection.Open();
+
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = @"
+                        UPDATE [User]
+                        SET [Username] = @Username
+                        WHERE [Id] = @Id";
+
+                    command.Parameters.AddWithValue("@Username", userProfile.Username);
+                    command.Parameters.AddWithValue("@Id", userProfile.Id);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    return rowsAffected > 0;
+                }
+            }
+        }
+
         public int AddUserProfile(UserProfile userProfile)
         {
             using (SqlConnection connection = Connection)

@@ -1,12 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import { useNavigate } from 'react-router-dom'; 
 import './Homepage.css';
 import "firebase/auth";
 
 export default function Homepage() {
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  const navigate = useNavigate(); 
 
-  // Function to handle the "Search Code Now" button click and navigate to "search-code" page
+  // Function to handle the "Search Code Now" button click
   const handleSearchButtonClick = () => {
     navigate('/search-code');
   };
@@ -15,7 +15,7 @@ export default function Homepage() {
     <div className="Homepage">
       <section>
         <div className="MainHeader">
-          Organizing and Access Reusable Code
+          Organize and Access Reusable Code
         </div>
         <div className="SecHeader">
           a user-friendly interface to store and manage code snippets effectively
@@ -25,5 +25,6 @@ export default function Homepage() {
         </button>
       </section>
     </div>
+    
   );
 }
