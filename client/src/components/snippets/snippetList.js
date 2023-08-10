@@ -39,7 +39,7 @@ export default function SnippetList() {
   const filteredSnippets = snippets.filter(
     (snippet) =>
       snippet.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      snippet.description.toLowerCase().includes(searchTerm.toLowerCase()) || // Include description in the search
+      snippet.description.toLowerCase().includes(searchTerm.toLowerCase()) || 
       snippet.content.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
