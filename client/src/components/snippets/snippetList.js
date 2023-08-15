@@ -11,6 +11,7 @@ export default function SnippetList() {
   const placeholderOptions = [
     "Search by title or content...",
     "Find snippets...",
+    "What are you looking for?",
     "Type your query here...",
     "Explore snippets...",
     "Search by programming language...",
