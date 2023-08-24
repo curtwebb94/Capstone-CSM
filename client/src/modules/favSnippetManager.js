@@ -2,8 +2,6 @@ import { getToken } from "./authManager";
 
 const apiUrl = "/api/FavoriteSnippet";
 
-// SHOW LIST BY USER ID
-
 export const getFavSnippetsByUserId = (id) => {
   return getToken().then((token) => {
     return fetch(`${apiUrl}/user/${id}`, {
@@ -15,9 +13,7 @@ export const getFavSnippetsByUserId = (id) => {
       if (resp.ok) {
         return resp.json();
       } else {
-        throw new Error(
-          "An unknown error occurred while trying to get products.",
-        );
+        throw new Error("An unknown error occurred while trying to get products.");
       }
     });
   });
@@ -34,21 +30,12 @@ export const getFavSnippetsByFirebaseId = (uid) => {
       if (resp.ok) {
         return resp.json();
       } else {
-        throw new Error(
-          "An unknown error occurred while trying to get products.",
-        );
+        throw new Error("An unknown error occurred while trying to get products.");
       }
     });
   });
 };
 
-// SAVE SNIPPETS
-
-// favSnippetManager.js
-
-// favSnippetManager.js
-
-// Pass the `action` parameter to determine the action (save or delete)
 export const SaveFavSnippet = (favoriteSnippetData, action) => {
   return getToken().then((token) => {
     let url;
@@ -76,7 +63,6 @@ export const SaveFavSnippet = (favoriteSnippetData, action) => {
         if (!resp.ok) {
           throw new Error("Failed to save/delete snippet as favorite.");
         }
-        // Check if response contains JSON data before parsing
         return resp.text().then((text) => (text ? JSON.parse(text) : null));
       })
       .catch((error) => {
@@ -86,15 +72,14 @@ export const SaveFavSnippet = (favoriteSnippetData, action) => {
   });
 };
 
-
 export const DeleteFavSnippet = (id) => {
   return getToken().then((token) => {
-      return fetch(`${apiUrl}/${id}`, {
-          method: "DELETE",
-          headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-          },
-      })
+    return fetch(`${apiUrl}/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
   });
 };
