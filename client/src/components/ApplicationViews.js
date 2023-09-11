@@ -22,7 +22,7 @@ export default function ApplicationViews({ isLoggedIn }) {
                 <Route path="/search-code" element={<SnippetList />} />
                 <Route path="/snippet-manager" element={<SnippetLocker />} />
                 <Route path="/snippet-form" element={<SnippetForm />} />
-                <Route path="*" element={<p>Whoops, nothing here...</p>} />
+                <Route path="*" element={<p>Whoops, nothing is here...</p>} />
             </Routes>
         </main>
     )
