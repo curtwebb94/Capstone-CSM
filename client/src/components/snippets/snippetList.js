@@ -26,7 +26,7 @@ export default function SnippetList() {
       setPlaceholderIndex((prevIndex) =>
         prevIndex === placeholderOptions.length - 1 ? 0 : prevIndex + 1
       );
-    }, 3000); // Rotate every 3 seconds
+    }, 2000); // Rotate every 2 seconds
 
     return () => clearInterval(interval);
   }, []);

@@ -88,7 +88,7 @@ const SnippetForm = () => {
               setSelectedLanguage(""); // Clear the selected language
             })
             .catch((error) => {
-              console.error("Error creating code snippet:", error);
+              console.error("Error creating the code snippet:", error);
               // Handle any errors that occurred during the create operation
             });
         });
